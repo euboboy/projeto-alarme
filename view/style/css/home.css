@@ -1,0 +1,88 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-size: 100%;
+    line-height: 1.5;
+    font-family: "Roboto Condensed", sans-serif;
+    background-color: #bdbdbd;
+    grey lighten-1
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: baseline;
+}
+
+a {
+    text-decoration: none;
+}
+
+.calendar-wrapper {
+    width: 100%;
+    margin-top: -49px;
+    padding: 2em;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+td {
+    height: 48px;
+    vertical-align: middle;
+}
+
+td.today {
+    background-color: #ff8a80;
+    font-weight: 700;
+    color: #ffebee;
+}
+
+thead td {
+    border: none;
+    text-transform: uppercase;
+}
+
+.father-is-body {
+    width: 90%;
+    margin: auto;
+    margin-top: 0;
+}
+
+.horario {
+    text-align: center;
+}
+
+.row .col.s2 {
+    width: 56px;
+}
+
+.mes,
+.dias,
+.not-current,
+.normal,
+.today {
+    text-align: center;
+}
+
+.not-current {
+    color: #bdbdbd;
+    grey lighten-1
+}
+
+.dias {
+    color: #ef5350;
+    red lighten-1
+}
+
+fieldset {
+    border: none;
+}

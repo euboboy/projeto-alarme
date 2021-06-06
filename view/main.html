@@ -1,0 +1,391 @@
+<?php
+include '../model/config.php';
+
+
+session_start();
+if (isset($_SESSION['name'])) {
+header("Location: ../index.php");
+}
+$name = $_SESSION['name'];
+$sql = "SELECT * FROM usuario WHERE name LIKE '%$name%'";
+$result = mysqli_query($conn, $sql);
+$qtd = mysqli_num_rows($result);
+$registro = mysqli_fetch_assoc($result);
+$lastName = $registro['lastName'];
+$userId =  $registro['id'];
+$email = $registro['email'];
+$phone = $registro['phone'];
+$complement = $registro['complement'];
+$homeAddress = $registro['homeAddress'];
+$cep =  $registro['cep'];
+mysqli_close($conn);
+?>
+
+
+    <!DOCTYPE html>
+    <html lang="pt-br">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Página do Usuário</title>
+
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link type="text/css" rel="stylesheet" href="../node_modules/materialize-css/dist/css/materialize.min.css" media="screen,projection" />
+        <link rel="stylesheet" type="text/css" href="./style/css/home.css" />
+        <link rel="stylesheet" type="text/css" href="./style/css/cor.css" />
+        <link rel="stylesheet" type="text/css" href="./style/css/calendar-mobile.css" media="screen and (max-width:480px)">
+
+    </head>
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1 0 auto;
+        }
+        
+        @media screen and (max-width:480px) {
+            .calendario {
+                display: none !important;
+            }
+            .calendar-mobile {
+                margin-top: 20px;
+            }
+        }
+        
+        @media screen and (min-width:481px) {
+            .dia-mob {
+                display: none;
+            }
+        }
+        
+        @media screen and (min-width:981px) {
+            body {
+                background-color: #B3D5F2;
+                background-image: url(./style/img/fundo-azul.jpeg);
+            }
+            .father-is-body {
+                width: 70%;
+            }
+            #test-swipe-3 .container {
+                height: 500px;
+                overflow: scroll;
+            }
+        }
+    </style>
+
+    <body>
+        <div class="father-is-body">
+            <div class="menu">
+                <ul id="tabs-swipe-demo" class="tabs">
+                    <li class="tab col s3"><a href="#" data-target="slide-out" class="sidenav-trigger"><i
+                        class="material-icons">menu</i></a> </li>
+                    <li class="tab col s2"><a href="#test-swipe-1">alarme</a></li>
+                    <li class="tab col s2"><a href="#test-swipe-3" class="active">sobre</a></li>
+                    <li class="tab col s2"><a href="#test-swipe-4">equipe</a></li>
+
+
+                    <ul id="slide-out" class="sidenav">
+                        <li>
+                            <div class="user-view">
+                                <div class="background">
+                                    <img src="./style/img/fundo-perfil.jpeg">
+                                </div>
+                                <a href="#user"><img class="circle" src="https://materializecss.com/images/yuna.jpg"></a>
+                                <a href="#name"><span class="white-text name">John Doe</span></a>
+                                <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="user-view">
+                                <p>Nome:</p>
+                                <p>Sobrenome:</p>
+                                <p>E-mail:</p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <div class="divider"></div>
+                        </li>
+                        <li><a href="#!"><i class="material-icons">edit</i>Editar</a></li>
+                        <li><a href="#!"><i class="material-icons">logout</i>Sair</a></li>
+
+
+                    </ul>
+
+
+                </ul>
+
+            </div>
+
+            <!-- ALARME -->
+            <div id="test-swipe-1">
+                <div class="container">
+                    <!-- Page Layout here -->
+                    <div class="row">
+                        <div class="col s12 m8 l7 card horizontal calendario">
+                            <div class="card-stacked">
+                                <div id="divCal" class="col s12 m10" style=" margin: 10px auto;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col s12 m4 l5 funcoes-mob">
+                            <ul class="collapsible white">
+                                <li class="active">
+                                    <div class="collapsible-header"><i class="material-icons">sensors</i>Agora</div>
+                                    <div class="collapsible-body center-align">
+                                        <div class="row">
+                                            <p>Validar com imagem se está ativado ou desativado.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="collapsible-header"><i class="material-icons">wb_sunny</i>Ativação</div>
+                                    <div class="collapsible-body">
+                                        <div class="switch center-align">
+                                            <label>
+                                        Off
+                                        <input id="checkbox" type="checkbox" value="0" />
+                                        <span class="lever"></span>
+                                        On
+                                    </label>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="collapsible-header"><i class="material-icons">schedule</i>Horário</div>
+                                    <div class="collapsible-body">
+                                        <div class="row" style="margin-bottom: 0px;">
+                                            <div class="item input-field col s12 m11 l10 offset-m1 offset-l1">
+                                                <input id="first_name2" type="time" class="validate" value="17:00" step="900" />
+                                                <label class="active" for="first_name2">Ativar:</label>
+                                            </div>
+                                            <div class="item input-field col s12 m11 l10 offset-m1 offset-l1">
+                                                <input id="first_name2" type="time" class="validate" value="09:00" />
+                                                <label class="active" for="first_name2">Desativar:</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dia-mob">
+                                    <div class="collapsible-header "><i class="material-icons">calendar_today</i>Hoje</div>
+                                    <div class="collapsible-body">
+                                        <div class="row">
+                                            <script>
+                                                var f = new Date();
+                                                var meses_mob = new Array(
+                                                    "Janeiro",
+                                                    "Fevereiro",
+                                                    "Março",
+                                                    "Abril",
+                                                    "Maio",
+                                                    "Junho",
+                                                    "Julho",
+                                                    "Agosto",
+                                                    "Setembro",
+                                                    "Outubro",
+                                                    "Novembro",
+                                                    "Dezembro"
+                                                );
+                                                var dias_mob = new Array(
+                                                    "Domingo",
+                                                    "Segunda",
+                                                    "Terça",
+                                                    "Quarta",
+                                                    "Quinta",
+                                                    "Sexta",
+                                                    "Sábado"
+                                                );
+
+                                                document.write('<div class="container-1 z-depth-5" style="margin:auto;">');
+                                                document.write('<div class="mes">' + meses_mob[f.getMonth()] + "</div>");
+                                                document.write('<div class="container-2">');
+                                                document.write('<div class="dia">' + dias_mob[f.getDay()] + "</div>");
+                                                document.write('<div class="numero">' + f.getDate() + "</div>");
+                                                document.write('<div class="año">' + f.getFullYear() + "</div>");
+                                                document.write("</div>");
+                                                document.write("</div>");
+                                            </script>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOBRE -->
+            <div id="test-swipe-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col s12 m10 l10" style="overflow: scroll;">
+                            <div id="fundamentos" class="section scrollspy col s12 m11 offset-m1">
+                                <div class="slider" style="margin-top: 50px;">
+                                    <ul class="slides">
+                                        <li>
+                                            <img src="https://lorempixel.com/580/250/technology/1">
+                                            <!-- random image -->
+                                            <div class="caption center-align">
+                                                <h4>C</h4>
+                                                <p class="light grey-text text-lighten-3">
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius quos amet, perferendis in, veniam voluptas explicabo ipsam repudiandae corrupti qui libero vel fugiat at possimus magnam consequatur odio natus doloribus.
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <img src="https://lorempixel.com/580/250/technology/2">
+                                            <!-- random image -->
+                                            <div class="caption left-align">
+                                                <h4>Parapin</h4>
+                                                <p class="light grey-text text-lighten-3">
+                                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ullam eum reprehenderit quaerat reiciendis odit quae facilis voluptate cumque porro dicta sint, eos magni magnam in eius aspernatur voluptatem? Qui, pariatur.
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <img src="https://lorempixel.com/580/250/technology/3">
+                                            <!-- random image -->
+                                            <div class="caption right-align">
+                                                <h4>Segurança</h4>
+                                                <p class="light grey-text text-lighten-3">
+                                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Neque nostrum aliquam esse similique dolorum quibusdam quod. Natus adipisci, velit atque harum tenetur illo officiis modi, maxime, itaque exercitationem nisi voluptates.
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <img src="https://lorempixel.com/580/250/technology/4">
+                                            <!-- random image -->
+                                            <div class="caption center-align">
+                                                <h4>Dúvidas</h4>
+                                                <p class="light grey-text text-lighten-3">
+                                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam maiores aspernatur quos autem itaque nisi doloribus, at nulla sapiente temporibus vel numquam recusandae minima velit quidem incidunt illum? Culpa, modi.
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <div id="diagramas" class="section scrollspy col s12 m11 offset-m1">
+                                <h4>Diagramas</h4>
+                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo sint laborum suscipit numquam,recusandae est libero sequi voluptates aliquid dignissimos. Perferendis quae facilis natus a officiis veritatis, aspernatur blanditiisdeserunt.
+                                </p>
+                                <div class="carousel s12" style="max-height: 240px;">
+                                    <a class="carousel-item" href="#one!"><img class="materialboxed" src="https://lorempixel.com/250/250/nature/1"></a>
+                                    <a class="carousel-item" href="#two!"><img class="materialboxed" src="https://lorempixel.com/250/250/nature/2"></a>
+                                    <a class="carousel-item" href="#three!"><img class="materialboxed" src="https://lorempixel.com/250/250/nature/3"></a>
+                                    <a class="carousel-item" href="#four!"><img class="materialboxed" src="https://lorempixel.com/250/250/nature/4"></a>
+                                    <a class="carousel-item" href="#five!"><img class="materialboxed" src="https://lorempixel.com/250/250/nature/5"></a>
+                                </div>
+                            </div>
+
+                            <div id="aplicacao" class="section scrollspy col s12 m11 offset-m1">
+                                <h4>Aplicação</h4>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sint sit odio nemo doloremque quae quas ipsum iure repudiandae iusto est. Amet, laudantium officiis! Hic magnam ipsa incidunt harum, saepe autem?</p>
+
+                            </div>
+
+
+                            <div id="initialization" class="section scrollspy s12 m11 offset-m1">
+
+                            </div>
+                        </div>
+                        <div class="col hide-on-small-only m3 l2">
+                            <ul class="section table-of-contents">
+                                <li><a href="#diagramas">Diagramas</a></li>
+                                <li><a href="#fundamentos">Fundamentos</a></li>
+                                <li><a href="#aplicacao">Aplicação</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- EQUIPE -->
+            <div id="test-swipe-4">
+                <div class="container">
+                </div>
+            </div>
+        </div>
+        <footer class="footer-copyright" style="padding: 20px;">
+            <div class="row">
+                <div class="container grey-text text-lighten-4 col s12 m4 offset-m2 center-align">
+                    Allan | Jonathan | Sergio <br> © 2021 Materialize, All rights reserved.
+                </div>
+                <div class="grey-text text-lighten-4 right col s12 m6 center-align">
+                    <p>Feito com
+                        <img id="img-footer" style="width: 1.5vw;" src="https://image.flaticon.com/icons/png/512/2917/2917114.png" alt="" srcset=""> em Curitiba.
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+
+        <!-- JavaScrip - Jquery -->
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../node_modules/materialize-css/dist/js/materialize.min.js"></script>
+        <script src="./style/js/calendar.js"></script>
+        <script>
+            $(document).ready(function() {
+                $(".materialboxed").materialbox();
+                $(".modal").modal();
+                $(".parallax").parallax();
+                $(".tabs").tabs();
+                $('.dropdown-trigger').dropdown();
+                $('.scrollspy').scrollSpy();
+                $('.sidenav').sidenav();
+                $('.collapsible').collapsible();
+                $('.carousel').carousel();
+                $('.materialboxed').materialbox();
+                $('.slider').slider();
+
+            });
+        </script>
+        <?php if (file_exists("../ligado.txt")) { ?>
+        <script>
+            $("#checkbox").prop("checked", true);
+        </script>
+        <?php} else { ?>
+            <script>
+                $("#checkbox").prop("checked", false);
+            </script>
+            <?php } ?>
+            <script>
+                // SGV 20210403 Mudar e verificar el estado do alarme
+                $("#checkbox").on("click", function() {
+                    var stateAlarm = $("#checkbox")[0].checked;
+                    if (stateAlarm == true) {
+                        $("#modal1").modal("open", "#modal1");
+                        $("#aceitar-ligar").on("click", function() {
+                            $("#checkbox").prop("checked", true);
+                        });
+                        $("#cancelar-ligar").on("click", function() {
+                            $("#checkbox").prop("checked", false);
+                        });
+                    } else {
+                        $("#modal2").modal("open", "#modal2");
+                        $("#aceitar-desligar").on("click", function() {
+                            $("#checkbox").prop("checked", false);
+                        });
+                        $("#cancelar-desligar").on("click", function() {
+                            $("#checkbox").prop("checked", true);
+                        });
+                    }
+                });
+            </script>
+
+
+
+
+    </body>
+
+    </html>

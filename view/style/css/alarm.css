@@ -1,0 +1,59 @@
+/* html, body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: 200px 200px;
+    background-color: #000;
+  } */
+  
+  #app {
+    position: relative;
+    -webkit-filter: drop-shadow(0 0 18px #854415);
+    filter: drop-shadow(0 0 18px #854415);
+    margin: auto;
+    margin-top: 35px;
+  }
+  
+  .alarm {
+    width: 96%;
+    height: 56vh;
+    filter: hue-rotate(0deg);
+    background: linear-gradient(45deg, #0f8, #08f);
+    animation: hue 1.5s infinite linear;
+    border-radius: 50%;
+  }
+  .alarm:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 3%;
+    top: 3%;
+    width: 94%;
+    height: 94%;
+    border-radius: 50%;
+    background-size: 200px 200px;
+    background-color: #000;
+  }
+  .alarm:before {
+    content: "ALARME";
+    display: inline-block;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    color: #FFF;
+    text-align: center;
+    line-height: 51vh;
+    font-size: 60px;
+    letter-spacing: 0.2em;
+  }
+  
+  @keyframes hue {
+    0% {
+      filter: hue-rotate(0deg);
+    }
+    100% {
+      filter: hue-rotate(360deg);
+    }
+  }

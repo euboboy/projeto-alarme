@@ -1,0 +1,19 @@
+#test-swipe-1,
+#test-swipe-2,
+#test-swipe-3,
+#test-swipe-4 {
+    background-color: #f5f5f5;
+}
+
+.conteudo {
+    background-color: #f5f5f5;
+}
+
+.page-footer {
+    background-color: #506AD4;
+}
+
+footer {
+    background-color: #5A86BF !important;
+    color: #f5f5f5;
+}
